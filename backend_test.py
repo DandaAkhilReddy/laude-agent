@@ -143,7 +143,7 @@ class LaudeAgentAPITester:
         import os
         from pathlib import Path
         
-        otp_dir = Path("otp_emails")
+        otp_dir = Path("backend/otp_emails")
         if otp_dir.exists():
             # Find the most recent OTP file
             otp_files = list(otp_dir.glob(f"otp_{self.test_email.replace('@', '_at_')}_*.html"))
