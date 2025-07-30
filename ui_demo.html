@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laude Agent Enterprise - UI Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'hss-primary': '#1f4e79',
+                        'hss-secondary': '#2c5aa0',
+                        'hss-light': '#e8f4fd'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .healthcare-gradient {
+            background: linear-gradient(135deg, #1f4e79 0%, #2c5aa0 50%, #3b82f6 100%);
+        }
+        .medical-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95));
+            border: 1px solid rgba(31, 78, 121, 0.1);
+            box-shadow: 0 4px 20px rgba(31, 78, 121, 0.08);
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="healthcare-gradient shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-6">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mr-3">
+                        <span class="text-2xl">🎙️</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-white">Laude Agent Enterprise</h1>
+                        <p class="text-white/80 text-sm">HSS Medicine Platform</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-white/80">Demo User</span>
+                    <button class="bg-red-500/20 hover:bg-red-500/30 border border-red-400/30 text-white px-4 py-2 rounded-lg transition-colors">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Welcome Section -->
+        <div class="medical-card rounded-2xl p-8 mb-8 hover-lift transition-all">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-bold text-hss-primary mb-2">
+                        Good evening, Demo! 👋
+                    </h2>
+                    <p class="text-gray-600 text-lg mb-4">
+                        Your AI-powered voice-to-email assistant is ready to help you create professional communications.
+                    </p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>Tuesday, January 30, 2024</span>
+                    </div>
+                </div>
+                <div class="hidden lg:block">
+                    <div class="w-32 h-32 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full flex items-center justify-center">
+                        <span class="text-6xl">🚀</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="medical-card p-6 rounded-xl hover-lift transition-all">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                        <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-2xl font-bold text-green-600">12</span>
+                </div>
+                <p class="text-gray-600 font-medium">Total Reports</p>
+                <p class="text-sm text-gray-500">+3 this week</p>
+            </div>
+
+            <div class="medical-card p-6 rounded-xl hover-lift transition-all">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-2xl font-bold text-blue-600">5</span>
+                </div>
+                <p class="text-gray-600 font-medium">Automation Requests</p>
+                <p class="text-sm text-gray-500">2 pending</p>
+            </div>
+
+            <div class="medical-card p-6 rounded-xl hover-lift transition-all">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <svg class="h-6 w-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse mr-2"></div>
+                        <span class="text-sm font-medium text-green-600">Online</span>
+                    </div>
+                </div>
+                <p class="text-gray-600 font-medium">System Status</p>
+                <p class="text-sm text-gray-500">All services operational</p>
+            </div>
+
+            <div class="medical-card p-6 rounded-xl hover-lift transition-all">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <svg class="h-6 w-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-medium text-orange-600">SECURE</span>
+                </div>
+                <p class="text-gray-600 font-medium">Session Active</p>
+                <p class="text-sm text-gray-500">Expires at 6:30 PM</p>
+            </div>
+        </div>
+
+        <!-- Main Features -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Weekly Report Generator -->
+            <div class="medical-card p-8 rounded-2xl hover-lift transition-all group cursor-pointer">
+                <div class="flex items-start justify-between mb-6">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                        </svg>
+                    </div>
+                    <div class="opacity-0 group-hover:opacity-100 transition-opacity">
+                        <svg class="h-6 w-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold text-hss-primary mb-3">
+                    🎙️ Weekly Report Generator
+                </h3>
+                <p class="text-gray-600 mb-4 leading-relaxed">
+                    Record your weekly updates using advanced voice recognition. Speak naturally and let AI transform your words into professional, polished reports.
+                </p>
+                <div class="flex items-center text-blue-600 font-medium">
+                    <span>Start Recording</span>
+                    <span class="ml-2 transform group-hover:translate-x-2 transition-transform">→</span>
+                </div>
+            </div>
+
+            <!-- Request Automation -->
+            <div class="medical-card p-8 rounded-2xl hover-lift transition-all group cursor-pointer">
+                <div class="flex items-start justify-between mb-6">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                    </div>
+                    <div class="opacity-0 group-hover:opacity-100 transition-opacity">
+                        <svg class="h-6 w-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold text-hss-primary mb-3">
+                    🤖 Request Automation
+                </h3>
+                <p class="text-gray-600 mb-4 leading-relaxed">
+                    Submit automation requests using voice or text. Chat with our support team and track your requests through our integrated communication system.
+                </p>
+                <div class="flex items-center text-green-600 font-medium">
+                    <span>Create Request</span>
+                    <span class="ml-2 transform group-hover:translate-x-2 transition-transform">→</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Demo -->
+        <div class="mt-8 medical-card rounded-xl overflow-hidden">
+            <div class="bg-hss-primary text-white p-4">
+                <h3 class="font-semibold mb-1">💬 Support Chat Demo</h3>
+                <p class="text-sm opacity-90">Real-time communication with admin team</p>
+            </div>
+            <div class="p-4 space-y-4 h-64 overflow-y-auto">
+                <div class="flex justify-end">
+                    <div class="max-w-xs px-4 py-3 rounded-2xl rounded-tr-sm bg-hss-primary text-white">
+                        <p class="text-sm">Hi! I need help with automating our patient intake process.</p>
+                        <p class="text-xs opacity-60 mt-1">2:30 PM</p>
+                    </div>
+                </div>
+                <div class="flex justify-start">
+                    <div class="max-w-xs px-4 py-3 rounded-2xl rounded-tl-sm bg-gray-100 text-gray-800">
+                        <p class="text-sm">Hello! I'd be happy to help. Can you tell me more about your current intake process?</p>
+                        <p class="text-xs opacity-60 mt-1">2:32 PM</p>
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="max-w-xs px-4 py-3 rounded-2xl rounded-tr-sm bg-hss-primary text-white">
+                        <p class="text-sm">Currently we have paper forms that patients fill out. We'd like to digitize this process.</p>
+                        <p class="text-xs opacity-60 mt-1">2:35 PM</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 border-t border-gray-200">
+                <div class="flex space-x-2">
+                    <input type="text" placeholder="Type your message..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hss-primary focus:border-transparent">
+                    <button class="bg-hss-primary text-white px-4 py-2 rounded-lg hover:bg-hss-secondary transition-colors">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
