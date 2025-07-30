@@ -117,14 +117,14 @@ async def send_otp_email(email: str, otp_code: str) -> bool:
     """Send OTP via email - Development version saves to file"""
     try:
         # Create email content
-        subject = "HSS Medicine - Laude Agent Login Code"
+        subject = "HHA Medicine - Laude Agent Login Code"
         
         html_body = f"""
         <html>
         <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
             <div style="background: linear-gradient(135deg, #1f4e79 0%, #2c5aa0 100%); color: white; padding: 30px; text-align: center;">
                 <h1 style="margin: 0;">🎙️ Laude Agent</h1>
-                <p style="margin: 10px 0 0 0;">HSS Medicine Enterprise Platform</p>
+                <p style="margin: 10px 0 0 0;">HHA Medicine Enterprise Platform</p>
             </div>
             
             <div style="padding: 40px 30px;">
@@ -151,7 +151,7 @@ async def send_otp_email(email: str, otp_code: str) -> bool:
             </div>
             
             <div style="background: #f8f9fa; padding: 20px; text-align: center; color: #6c757d; font-size: 12px;">
-                <p style="margin: 0;"><strong>HSS Medicine - Laude Agent</strong></p>
+                <p style="margin: 0;"><strong>HHA Medicine - Laude Agent</strong></p>
                 <p style="margin: 5px 0 0 0;">Enterprise Voice-to-Email Automation Platform</p>
                 <p style="margin: 5px 0 0 0;">Confidential - For Internal Use Only</p>
             </div>
