@@ -570,6 +570,295 @@ async def get_report_history(user_data: dict = Depends(validate_session)):
         logger.error(f"Report history error: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to fetch report history")
 
+# Automation Requests Endpoints
+
+@app.post("/api/automation/requests")
+async def create_automation_request(
+    request_data: AutomationRequest,
+    user_data: dict = Depends(validate_session)
+):
+    """Create new automation request"""
+    try:
+        request_id = str(uuid.uuid4())
+        
+        request_doc = {
+            "_id": request_id,
+            "title": request_data.title.strip(),
+            "description": request_data.description.strip(),
+            "priority": request_data.priority,
+            "status": "pending",
+            "user_id": user_data["user_id"],
+            "user_name": user_data["full_name"],
+            "user_email": user_data["email"],
+            "user_department": user_data["department"],
+            "created_at": datetime.utcnow(),
+            "updated_at": datetime.utcnow(),
+            "admin_notes": None
+        }
+        
+        await db.automation_requests.insert_one(request_doc)
+        
+        logger.info(f"Automation request created: {request_id} by {user_data['email']}")
+        
+        return {
+            "success": True,
+            "message": "Automation request created successfully",
+            "request_id": request_id,
+            "request": request_doc
+        }
+        
+    except Exception as e:
+        logger.error(f"Create automation request error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to create automation request")
+
+@app.get("/api/automation/requests")
+async def get_user_automation_requests(user_data: dict = Depends(validate_session)):
+    """Get user's automation requests"""
+    try:
+        requests = await db.automation_requests.find(
+            {"user_id": user_data["user_id"]}
+        ).sort("created_at", -1).to_list(100)
+        
+        return {
+            "success": True,
+            "requests": requests
+        }
+        
+    except Exception as e:
+        logger.error(f"Get automation requests error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to fetch automation requests")
+
+@app.put("/api/automation/requests/{request_id}")
+async def update_automation_request(
+    request_id: str,
+    update_data: dict,
+    user_data: dict = Depends(validate_session)
+):
+    """Update automation request (user can only update own requests)"""
+    try:
+        # Check if request exists and belongs to user
+        request = await db.automation_requests.find_one({
+            "_id": request_id,
+            "user_id": user_data["user_id"]
+        })
+        
+        if not request:
+            raise HTTPException(status_code=404, detail="Request not found")
+        
+        # Update allowed fields
+        update_fields = {}
+        if "title" in update_data:
+            update_fields["title"] = update_data["title"].strip()
+        if "description" in update_data:
+            update_fields["description"] = update_data["description"].strip()
+        if "priority" in update_data:
+            update_fields["priority"] = update_data["priority"]
+        
+        update_fields["updated_at"] = datetime.utcnow()
+        
+        await db.automation_requests.update_one(
+            {"_id": request_id},
+            {"$set": update_fields}
+        )
+        
+        logger.info(f"Automation request updated: {request_id} by {user_data['email']}")
+        
+        return {
+            "success": True,
+            "message": "Request updated successfully"
+        }
+        
+    except Exception as e:
+        logger.error(f"Update automation request error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to update automation request")
+
+@app.post("/api/automation/requests/{request_id}/messages")
+async def add_message_to_request(
+    request_id: str,
+    message_data: ChatMessage,
+    user_data: dict = Depends(validate_session)
+):
+    """Add message to automation request chat"""
+    try:
+        # Verify request exists and user has access
+        request = await db.automation_requests.find_one({"_id": request_id})
+        if not request:
+            raise HTTPException(status_code=404, detail="Request not found")
+        
+        # Check user access (owner or admin)
+        if request["user_id"] != user_data["user_id"] and not user_data.get("is_admin", False):
+            raise HTTPException(status_code=403, detail="Access denied")
+        
+        message_id = str(uuid.uuid4())
+        message_doc = {
+            "_id": message_id,
+            "request_id": request_id,
+            "message": message_data.message.strip(),
+            "sender_type": message_data.sender_type,
+            "sender_name": user_data["full_name"],
+            "sender_email": user_data["email"],
+            "created_at": datetime.utcnow()
+        }
+        
+        await db.chat_messages.insert_one(message_doc)
+        
+        # Update request timestamp
+        await db.automation_requests.update_one(
+            {"_id": request_id},
+            {"$set": {"updated_at": datetime.utcnow()}}
+        )
+        
+        logger.info(f"Message added to request {request_id} by {user_data['email']}")
+        
+        return {
+            "success": True,
+            "message": "Message added successfully",
+            "message_id": message_id
+        }
+        
+    except Exception as e:
+        logger.error(f"Add message error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to add message")
+
+@app.get("/api/automation/requests/{request_id}/messages")
+async def get_request_messages(
+    request_id: str,
+    user_data: dict = Depends(validate_session)
+):
+    """Get messages for automation request"""
+    try:
+        # Verify request exists and user has access
+        request = await db.automation_requests.find_one({"_id": request_id})
+        if not request:
+            raise HTTPException(status_code=404, detail="Request not found")
+        
+        # Check user access (owner or admin)
+        if request["user_id"] != user_data["user_id"] and not user_data.get("is_admin", False):
+            raise HTTPException(status_code=403, detail="Access denied")
+        
+        messages = await db.chat_messages.find(
+            {"request_id": request_id}
+        ).sort("created_at", 1).to_list(1000)
+        
+        return {
+            "success": True,
+            "messages": messages
+        }
+        
+    except Exception as e:
+        logger.error(f"Get messages error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to fetch messages")
+
+# Admin Endpoints
+
+@app.get("/api/admin/requests")
+async def get_all_automation_requests(user_data: dict = Depends(validate_session)):
+    """Get all automation requests (admin only)"""
+    try:
+        if not user_data.get("is_admin", False):
+            raise HTTPException(status_code=403, detail="Admin access required")
+        
+        requests = await db.automation_requests.find({}).sort("created_at", -1).to_list(1000)
+        
+        return {
+            "success": True,
+            "requests": requests
+        }
+        
+    except Exception as e:
+        logger.error(f"Get all requests error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to fetch requests")
+
+@app.put("/api/admin/requests/{request_id}/status")
+async def update_request_status(
+    request_id: str,
+    status_data: AdminUpdate,
+    user_data: dict = Depends(validate_session)
+):
+    """Update request status (admin only)"""
+    try:
+        if not user_data.get("is_admin", False):
+            raise HTTPException(status_code=403, detail="Admin access required")
+        
+        # Verify request exists
+        request = await db.automation_requests.find_one({"_id": request_id})
+        if not request:
+            raise HTTPException(status_code=404, detail="Request not found")
+        
+        # Update request
+        update_fields = {
+            "status": status_data.status,
+            "updated_at": datetime.utcnow()
+        }
+        
+        if status_data.admin_notes:
+            update_fields["admin_notes"] = status_data.admin_notes.strip()
+        
+        await db.automation_requests.update_one(
+            {"_id": request_id},
+            {"$set": update_fields}
+        )
+        
+        # Add admin message if notes provided
+        if status_data.admin_notes:
+            message_doc = {
+                "_id": str(uuid.uuid4()),
+                "request_id": request_id,
+                "message": f"Status updated to '{status_data.status}': {status_data.admin_notes}",
+                "sender_type": "admin",
+                "sender_name": user_data["full_name"],
+                "sender_email": user_data["email"],
+                "created_at": datetime.utcnow()
+            }
+            await db.chat_messages.insert_one(message_doc)
+        
+        logger.info(f"Request status updated: {request_id} to {status_data.status} by {user_data['email']}")
+        
+        return {
+            "success": True,
+            "message": "Request status updated successfully"
+        }
+        
+    except Exception as e:
+        logger.error(f"Update request status error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to update request status")
+
+@app.get("/api/admin/stats")
+async def get_admin_stats(user_data: dict = Depends(validate_session)):
+    """Get admin statistics"""
+    try:
+        if not user_data.get("is_admin", False):
+            raise HTTPException(status_code=403, detail="Admin access required")
+        
+        # Get request stats
+        total_requests = await db.automation_requests.count_documents({})
+        pending_requests = await db.automation_requests.count_documents({"status": "pending"})
+        in_progress_requests = await db.automation_requests.count_documents({"status": "in_progress"})
+        completed_requests = await db.automation_requests.count_documents({"status": "completed"})
+        
+        # Get user stats
+        total_users = await db.users.count_documents({"is_active": True})
+        recent_users = await db.users.count_documents({
+            "last_login": {"$gte": datetime.utcnow() - timedelta(days=30)}
+        })
+        
+        return {
+            "success": True,
+            "stats": {
+                "total_requests": total_requests,
+                "pending_requests": pending_requests,
+                "in_progress_requests": in_progress_requests,
+                "completed_requests": completed_requests,
+                "total_users": total_users,
+                "active_users": recent_users,
+                "completion_rate": round((completed_requests / max(total_requests, 1)) * 100, 1)
+            }
+        }
+        
+    except Exception as e:
+        logger.error(f"Get admin stats error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to fetch admin statistics")
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8001)
