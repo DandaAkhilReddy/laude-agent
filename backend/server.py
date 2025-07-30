@@ -50,7 +50,7 @@ security = HTTPBearer()
 # Configuration
 MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-COMPANY_DOMAIN = "hssmedicine.com"
+COMPANY_DOMAIN = "hhamedicine.com"
 OTP_EXPIRY_MINUTES = 10
 SESSION_EXPIRY_HOURS = 8
 
