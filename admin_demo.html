@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laude Agent - Admin Panel Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'hss-primary': '#1f4e79',
+                        'hss-secondary': '#2c5aa0'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .medical-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95));
+            border: 1px solid rgba(31, 78, 121, 0.1);
+            box-shadow: 0 4px 20px rgba(31, 78, 121, 0.08);
+        }
+        .admin-gradient {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #dc2626 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Admin Header -->
+    <header class="admin-gradient shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-6">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3">
+                        <span class="text-2xl">⚙️</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-white">Admin Panel</h1>
+                        <p class="text-white/80 text-sm">Manage automation requests and system administration</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="bg-yellow-500/20 border border-yellow-400/30 rounded-lg px-3 py-1">
+                        <span class="text-yellow-200 text-xs font-medium">ADMIN ACCESS</span>
+                    </div>
+                    <span class="text-white/80">Admin User</span>
+                    <button class="bg-red-500/20 hover:bg-red-500/30 border border-red-400/30 text-white px-4 py-2 rounded-lg transition-colors">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tab Navigation -->
+    <div class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex space-x-8">
+                <button class="flex items-center px-3 py-4 border-b-2 border-hss-primary text-hss-primary font-medium text-sm">
+                    <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                    </svg>
+                    Automation Requests
+                </button>
+                <button class="flex items-center px-3 py-4 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm">
+                    <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                    Analytics
+                </button>
+                <button class="flex items-center px-3 py-4 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm">
+                    <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                    </svg>
+                    User Management
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Requests List -->
+            <div class="lg:col-span-2">
+                <!-- Search and Controls -->
+                <div class="medical-card p-6 rounded-xl mb-6">
+                    <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                        <div class="flex-1 relative">
+                            <svg class="absolute left-3 top-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            <input type="text" placeholder="Search requests, users, departments..." class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hss-primary focus:border-transparent">
+                        </div>
+                        <select class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hss-primary focus:border-transparent">
+                            <option>All Status</option>
+                            <option>Pending</option>
+                            <option>In Progress</option>
+                            <option>Completed</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-gray-600">Showing 4 of 4 requests</div>
+                        <button class="flex items-center text-hss-primary hover:text-hss-secondary transition-colors">
+                            <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                            </svg>
+                            Export CSV
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Request Cards -->
+                <div class="space-y-4">
+                    <!-- High Priority Request -->
+                    <div class="medical-card p-6 rounded-xl hover:shadow-lg transition-all cursor-pointer ring-2 ring-hss-primary">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-hss-primary mb-1">Automated Patient Intake Process</h3>
+                                <div class="flex items-center text-sm text-gray-600 space-x-4">
+                                    <span class="flex items-center">
+                                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                        </svg>
+                                        Dr. Sarah Johnson
+                                    </span>
+                                    <span>Emergency Medicine</span>
+                                    <span>sarah.johnson@hssmedicine.com</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="px-3 py-1 rounded-full text-xs font-medium border bg-blue-100 text-blue-800 border-blue-200">IN PROGRESS</span>
+                                <span class="px-3 py-1 rounded-full text-xs font-medium border bg-red-100 text-red-800 border-red-200">HIGH</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Need automation for patient intake forms and initial screening workflow</p>
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+                            <p class="text-sm text-blue-800">
+                                <strong>Admin Notes:</strong> Working on initial requirements gathering
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <div class="flex items-center">
+                                <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Created Jan 15, 2024 • Updated Jan 16, 2024
+                            </div>
+                            <span class="text-hss-primary font-medium">Selected →</span>
+                        </div>
+                    </div>
+
+                    <!-- Medium Priority Request -->
+                    <div class="medical-card p-6 rounded-xl hover:shadow-lg transition-all cursor-pointer">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-hss-primary mb-1">Insurance Verification Automation</h3>
+                                <div class="flex items-center text-sm text-gray-600 space-x-4">
+                                    <span class="flex items-center">
+                                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                        </svg>
+                                        Mark Thompson
+                                    </span>
+                                    <span>Billing Department</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="px-3 py-1 rounded-full text-xs font-medium border bg-yellow-100 text-yellow-800 border-yellow-200">PENDING</span>
+                                <span class="px-3 py-1 rounded-full text-xs font-medium border bg-yellow-100 text-yellow-800 border-yellow-200">MEDIUM</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Automate the insurance verification process to reduce manual work for billing department</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <div class="flex items-center">
+                                <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Created Jan 14, 2024
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Completed Request -->
+                    <div class="medical-card p-6 rounded-xl hover:shadow-lg transition-all cursor-pointer opacity-75">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-hss-primary mb-1">Appointment Reminder System</h3>
+                                <div class="flex items-center text-sm text-gray-600 space-x-4">
+                                    <span class="flex items-center">
+                                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                        </svg>
+                                        Lisa Chen
+                                    </span>
+                                    <span>Patient Services</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="px-3 py-1 rounded-full text-xs font-medium border bg-green-100 text-green-800 border-green-200">COMPLETED</span>
+                                <span class="px-3 py-1 rounded-full text-xs font-medium border bg-green-100 text-green-800 border-green-200">LOW</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Set up automated appointment reminders via SMS and email to reduce no-shows</p>
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-3 mb-4">
+                            <p class="text-sm text-green-800">
+                                <strong>Admin Notes:</strong> Successfully implemented and tested - 40% reduction in no-shows
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <div class="flex items-center">
+                                <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Created Jan 10, 2024 • Completed Jan 13, 2024
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Chat Panel -->
+            <div class="lg:col-span-1">
+                <div class="medical-card rounded-xl overflow-hidden h-fit lg:sticky lg:top-8">
+                    <!-- Chat Header -->
+                    <div class="bg-hss-primary text-white p-4">
+                        <h3 class="font-semibold mb-1">Request Details</h3>
+                        <p class="text-sm opacity-90">Automated Patient Intake Process</p>
+                    </div>
+
+                    <!-- Status Update -->
+                    <div class="p-4 border-b border-gray-200">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Update Status</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hss-primary focus:border-transparent text-sm">
+                            <option>Pending</option>
+                            <option selected>In Progress</option>
+                            <option>Completed</option>
+                            <option>Cancelled</option>
+                        </select>
+                    </div>
+
+                    <!-- Chat Messages -->
+                    <div class="h-64 overflow-y-auto p-4 space-y-3">
+                        <div class="flex justify-start">
+                            <div class="max-w-xs px-3 py-2 rounded-2xl text-sm bg-gray-100 text-gray-800">
+                                <div class="flex items-center mb-1">
+                                    <svg class="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                    <span class="text-xs font-medium opacity-75">Dr. Sarah Johnson</span>
+                                </div>
+                                <p>Hi! I submitted a request for automating our patient intake process. This is high priority for our emergency department.</p>
+                                <p class="text-xs opacity-60 mt-1">Jan 15, 09:30</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-end">
+                            <div class="max-w-xs px-3 py-2 rounded-2xl text-sm bg-hss-primary text-white">
+                                <div class="flex items-center mb-1">
+                                    <svg class="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <span class="text-xs font-medium opacity-75">Admin Support</span>
+                                </div>
+                                <p>Hello Dr. Johnson! I understand the urgency. I have a few questions: 1) What specific forms need automation? 2) Epic EMR integration needed? 3) Timeline?</p>
+                                <p class="text-xs opacity-60 mt-1">Jan 15, 10:15</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-start">
+                            <div class="max-w-xs px-3 py-2 rounded-2xl text-sm bg-gray-100 text-gray-800">
+                                <p>Great questions! 1) Patient info, insurance verification, triage assessment, medical history 2) Yes, Epic integration essential 3) 3 weeks if possible - increased volume.</p>
+                                <p class="text-xs opacity-60 mt-1">Jan 15, 14:20</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Admin Response Input -->
+                    <div class="p-4 border-t border-gray-200">
+                        <div class="flex space-x-2">
+                            <input type="text" placeholder="Type admin response..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hss-primary focus:border-transparent text-sm">
+                            <button class="bg-hss-primary text-white px-3 py-2 text-sm rounded-lg hover:bg-hss-secondary transition-colors">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
