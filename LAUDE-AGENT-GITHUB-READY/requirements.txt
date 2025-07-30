@@ -1,0 +1,47 @@
+# === Requirements.txt ===
+
+# Core Dependencies
+openai>=1.0.0
+python-dotenv>=1.0.0
+
+# Audio Recording and Processing
+sounddevice>=0.4.6
+numpy>=1.24.0
+
+# Audio Format Conversion (Optional - requires FFmpeg)
+pydub>=0.25.1
+
+# Email Support
+# smtplib (built-in)
+# email (built-in)
+
+# File and Path Handling
+pathlib
+
+# Date and Time
+# datetime (built-in)
+
+# Logging
+# logging (built-in)
+
+# System and OS Operations
+# os (built-in)
+# sys (built-in)
+
+# Additional Utilities (built-in modules)
+# uuid (built-in)
+
+# Development and Testing (Optional)
+pytest>=7.0.0
+black>=23.0.0
+flake8>=6.0.0
+
+# Installation Notes:
+# 1. Install Python 3.8+ first
+# 2. Run: pip install -r requirements.txt
+# 3. For audio format conversion, install FFmpeg separately:
+#    - Windows: Download from https://ffmpeg.org/download.html
+#    - macOS: brew install ffmpeg
+#    - Linux: sudo apt install ffmpeg
+# 4. Set up .env file with your API keys and email configuration
+# 5. Test microphone permissions before first use
